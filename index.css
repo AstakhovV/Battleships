@@ -1,5 +1,4 @@
-body {
-    background: linear-gradient(90deg, #032a0e 0%, #063919 100%);
+.body {
     color: #fff;
     font-family: 'Khula', sans-serif;
     height: 100vh;
@@ -30,6 +29,7 @@ h1 {
 .start {
     font-size: 1.5rem;
 }
+
 .screen {
     display: flex;
     flex-direction: column;
@@ -84,7 +84,13 @@ h1 {
 hr{
     visibility: hidden;
 }
+.canvasFireworks {
+}
+.canvasFireworks.deactive{
+    display: none;
+}
 .board {
+
     width: 1024px;
     height: 863px;
     position: relative;

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Test</title>
+    <title>Battleship</title>
 </head>
-<body>
+<body id="body" class="body">
 <div class="screen">
     <h1>Battleships</h1>
     <a id='start' href="#" class="start">Начать игру</a>
@@ -31,6 +31,7 @@
     <div id="informationDifficulty" class="informationDifficulty"></div>
 </div>
 <div class="screen">
+    <canvas width="1920" height="700" id="fireworks-canvas" class="canvasFireworks deactive"></canvas>
     <div id="board" class="board">
         <div id="messageArea"></div>
         <table>
@@ -71,9 +72,11 @@
             <div id="informationShips"></div>
         </div>
     </div>
-
 </div>
+<script src="fireworks.js"></script>
+<script>
 
+</script>
 <script src="battleship.js"></script>
 </body>
 </html>

@@ -43,6 +43,7 @@ let model = {
                 if (this.isSunk(ship)) {
                     view.displayMessage('You sank my battleship!')
                     this.shipsSunk++
+                    informationShips.innerHTML = `Потоплено кораблей: <span class="primary">${model.shipsSunk}</span> из <span class="primary">${model.numShips}</span> `
                 }
                 return true
             }
@@ -160,6 +161,8 @@ const difficultyList = document.querySelector('#difficulty-list');
 const difficultyBtn = document.querySelectorAll('.difficulty-btn');
 const informationShips = document.getElementById('informationShips')
 const informationDifficulty = document.getElementById('informationDifficulty')
+const canvasFireworks = document.getElementById('fireworks-canvas')
+const bodyDiv = document.getElementById('body')
 
 startBtn.addEventListener('click', (e)=>{
     e.preventDefault();
@@ -182,6 +185,8 @@ function finishGame (){
     board.innerHTML = `<h1>Вы потопили
  <span class="primary">${model.numShips}</span>
    корабля за <span class="primary">${controller.guesses}</span> ходов</h1><hr><button class="reset-btn" onclick="resetGame()">Начать заново</button>`;
+    canvasFireworks.classList.remove('deactive')
+    fireworkStart()
 }
 
 for (let i = 0; i < difficultyBtn.length; i++) {
