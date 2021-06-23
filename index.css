@@ -1,12 +1,99 @@
 body {
-    background-color: black
+    background: linear-gradient(90deg, #032a0e 0%, #063919 100%);
+    color: #fff;
+    font-family: 'Khula', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    text-align: center;
 }
-div#board {
+a {
+    color: #fff;
+    text-decoration: none;
+}
+.informationDifficulty{
+    background: url("ship.png");
+    height: 70px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+a:hover {
+    color: #16D9E3;
+}
+h1 {
+    line-height: 1.4;
+    font-size: 4rem;
+}
+.start {
+    font-size: 1.5rem;
+}
+.screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    transition: margin 0.5s ease-out;
+    background: linear-gradient(90deg, #032a0e 0%, #063919 100%);
+}
+.screen.up {
+    margin-top: -100vh;
+}
+
+.difficulty-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+.difficulty-list li {
+    margin: 10px;
+}
+.difficulty-btn {
+    background-color: transparent;
+    border: 2px solid #C0C0C0;
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    padding: .5rem 1rem;
+    font-size: 1.5rem;
+}
+.difficulty-btn:hover {
+    border: 2px solid #16D9E3;
+    color: #16D9E3;
+}
+.reset-btn {
+    top: 200px;
+    background-color: transparent;
+    border: 2px solid #C0C0C0;
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    padding: .5rem 1rem;
+    font-size: 1.5rem;
+}
+.reset-btn:hover {
+    border: 2px solid #16D9E3;
+    color: #16D9E3;
+}
+hr{
+    visibility: hidden;
+}
+.board {
     width: 1024px;
     height: 863px;
     position: relative;
     margin: auto;
     background: url("board.jpg") no-repeat;
+    border: 10px black solid;
+    border-radius: 10px;
+    box-shadow: -8px -8px 20px #16181a, 10px 7px 20px #595a61;
+
 }
 div#messageArea {
     position: absolute;
@@ -28,15 +115,25 @@ td {
     width: 94px;
     height: 94px;
 }
+.information{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 10px;
+
+}
 form{
+    display: table;
+    height: 10px;
     position: absolute;
     bottom: 0px;
     right: 0px;
-    padding: 15px;
+    padding: 10px;
     background-color: rgb(83,175,19);
     border-radius: 20px;
 }
 form input{
+    display: table-cell;
     background-color: rgb(152, 207, 113);
     border-color: rgb(83,175,19);
     font-size: 1em;
@@ -51,4 +148,7 @@ form input{
 .miss {
     background: url("miss.png") no-repeat center;
     transition: background 0.25s;
+}
+.primary {
+    color: #16D9E3;
 }

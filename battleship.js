@@ -20,10 +20,11 @@ let view = {
 
 let model = {
     boardSize: 7,
-    numShips: 2,
+    numShips: 0,
     shipsSunk: 0,
     shipLength: 3,
     ships: [
+        {locations: [0, 0, 0], hits: ['', '', '']},
         {locations: [0, 0, 0], hits: ['', '', '']},
         {locations: [0, 0, 0], hits: ['', '', '']},
         {locations: [0, 0, 0], hits: ['', '', '']}
@@ -108,7 +109,7 @@ let controller = {
             this.guesses++
             let hit = model.fire(location)
             if (hit && model.shipsSunk === model.numShips) {
-                view.displayMessage('You sank all my battleships, in ' + this.guesses + ' guesses')
+                finishGame ()
             }
         }
     }
@@ -153,5 +154,46 @@ function handleKeyPress(e) {
         return false
     }
 }
+const startBtn = document.querySelector('#start');
+const screens = document.querySelectorAll('.screen')
+const difficultyList = document.querySelector('#difficulty-list');
+const difficultyBtn = document.querySelectorAll('.difficulty-btn');
+const informationShips = document.getElementById('informationShips')
+const informationDifficulty = document.getElementById('informationDifficulty')
 
-window.onload = init
+startBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    screens[0].classList.add('up')
+})
+difficultyList.addEventListener('click', (e) => {
+    if (e.target.classList.contains('difficulty-btn')) {
+        model.numShips = parseInt(e.target.getAttribute('data-time'))
+        screens[1].classList.add('up');
+        init()
+        informationShips.innerHTML = `Потоплено кораблей: <span class="primary">${model.shipsSunk}</span> из <span class="primary">${model.numShips}</span> `
+    }
+})
+function resetGame() {
+    window.location.reload()
+}
+
+function finishGame (){
+    board.removeAttribute('class')
+    board.innerHTML = `<h1>Вы потопили
+ <span class="primary">${model.numShips}</span>
+   корабля за <span class="primary">${controller.guesses}</span> ходов</h1><hr><button class="reset-btn" onclick="resetGame()">Начать заново</button>`;
+}
+
+for (let i = 0; i < difficultyBtn.length; i++) {
+    difficultyBtn[i].addEventListener('mouseover', increaseSize)
+    difficultyBtn[i].addEventListener('mouseleave', decreaseSize)
+}
+
+function increaseSize(e) {
+    size = parseInt(e.target.getAttribute('data-time'))
+    informationDifficulty.style.width = `${size * 90}px`
+
+}
+function decreaseSize() {
+    informationDifficulty.style.width = `0px`
+}
