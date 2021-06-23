@@ -2,11 +2,6 @@ let view = {
     displayMessage: function (mes) {
         let messageArea = document.getElementById('messageArea')
         messageArea.innerHTML = mes
-
-        function clearForm() {
-            messageArea.innerHTML = ''
-        }
-        setTimeout(clearForm, 5000)
     },
     displayHit: function (location) {
         let cell = document.getElementById(location)
@@ -34,14 +29,14 @@ let model = {
             let ship = this.ships[i]
             let index = ship.locations.indexOf(guess)
             if (ship.hits[index] === "hit") {
-                view.displayMessage("Oops, you already hit that location!");
+                view.displayMessage("Упс, вы уже попадали в эту локацию!");
                 return true;
             } else if (index >= 0) {
                 ship.hits[index] = 'hit'
                 view.displayHit(guess)
-                view.displayMessage('HIT!')
+                view.displayMessage('Попадание!')
                 if (this.isSunk(ship)) {
-                    view.displayMessage('You sank my battleship!')
+                    view.displayMessage('Флот потоплен!')
                     this.shipsSunk++
                     informationShips.innerHTML = `Потоплено кораблей: <span class="primary">${model.shipsSunk}</span> из <span class="primary">${model.numShips}</span> `
                 }
@@ -49,7 +44,7 @@ let model = {
             }
         }
         view.displayMiss(guess)
-        view.displayMessage('You missed.')
+        view.displayMessage('Промах.')
         return false
     },
     isSunk: function (ship) {
@@ -105,7 +100,7 @@ let model = {
 let controller = {
     guesses: 0,
     processGuess: function (guess) {
-        let location = parseGuess(guess)
+        let location = guess
         if (location) {
             this.guesses++
             let hit = model.fire(location)
@@ -116,45 +111,10 @@ let controller = {
     }
 }
 
-function parseGuess(guess) {
-    let alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-    if (guess === null || guess.length !== 2) {
-        alert('Please, enter valid coordinate!')
-    } else {
-        let row = alphabet.indexOf(guess.charAt(0))
-        let column = guess.charAt(1)
-        if (isNaN(row) || isNaN(column)) {
-            alert('That is not on the board')
-        } else if (row < 0 || row > model.boardSize || column < 0 || column > model.boardSize) {
-            alert('That is not on the board')
-        } else {
-            return row + column
-        }
-    }
-    return null
-}
-
 function init() {
-    let fireButton = document.getElementById('fireButton')
-    fireButton.onclick = handleFireButton
-    let guessInput = document.getElementById('guessInput')
-    guessInput.onkeypress = handleKeyPress
     model.generateShipLocations()
 }
 
-function handleFireButton() {
-    let guess = document.getElementById('guessInput').value
-    controller.processGuess(guess)
-    guess.value = ''
-}
-
-function handleKeyPress(e) {
-    let fireButton = document.getElementById('fireButton')
-    if (e.keyCode === 13) {
-        fireButton.click()
-        return false
-    }
-}
 const startBtn = document.querySelector('#start');
 const screens = document.querySelectorAll('.screen')
 const difficultyList = document.querySelector('#difficulty-list');
@@ -162,7 +122,7 @@ const difficultyBtn = document.querySelectorAll('.difficulty-btn');
 const informationShips = document.getElementById('informationShips')
 const informationDifficulty = document.getElementById('informationDifficulty')
 const canvasFireworks = document.getElementById('fireworks-canvas')
-const bodyDiv = document.getElementById('body')
+const tableTd = document.getElementsByTagName('td')
 
 startBtn.addEventListener('click', (e)=>{
     e.preventDefault();
@@ -176,6 +136,16 @@ difficultyList.addEventListener('click', (e) => {
         informationShips.innerHTML = `Потоплено кораблей: <span class="primary">${model.shipsSunk}</span> из <span class="primary">${model.numShips}</span> `
     }
 })
+
+for (let i=0; i < tableTd.length; i++){
+    tableTd[i].addEventListener('click', clickTable)
+}
+function clickTable(e) {
+    let element = e.target.id
+    controller.processGuess(element)
+}
+
+
 function resetGame() {
     window.location.reload()
 }
