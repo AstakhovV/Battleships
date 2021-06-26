@@ -120,6 +120,7 @@ const screens = document.querySelectorAll('.screen')
 const difficultyList = document.querySelector('#difficulty-list');
 const difficultyBtn = document.querySelectorAll('.difficulty-btn');
 const informationShips = document.getElementById('informationShips')
+const informationNumberShips = document.getElementById('informationNumberShips')
 const informationDifficulty = document.getElementById('informationDifficulty')
 const canvasFireworks = document.getElementById('fireworks-canvas')
 const tableTd = document.getElementsByTagName('td')
@@ -154,7 +155,7 @@ function finishGame (){
     board.removeAttribute('class')
     board.innerHTML = `<h1>Вы потопили
  <span class="primary">${model.numShips}</span>
-   корабля за <span class="primary">${controller.guesses}</span> ходов</h1><hr><button class="reset-btn" onclick="resetGame()">Начать заново</button>`;
+   корабля за <span class="primary">${controller.guesses}</span> ходов</h1><button class="reset-btn" onclick="resetGame()">Начать заново</button>`;
     canvasFireworks.classList.remove('deactive')
     fireworkStart()
 }
@@ -165,8 +166,9 @@ for (let i = 0; i < difficultyBtn.length; i++) {
 }
 
 function increaseSize(e) {
-    size = parseInt(e.target.getAttribute('data-time'))
+    let size = parseInt(e.target.getAttribute('data-time'))
     informationDifficulty.style.width = `${size * 90}px`
+    informationNumberShips.innerHTML = `Количество кораблей ${size}`
 
 }
 function decreaseSize() {
