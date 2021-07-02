@@ -36,9 +36,9 @@ let model = {
                 view.displayHit(guess)
                 view.displayMessage('Попадание!')
                 if (this.isSunk(ship)) {
-                    view.displayMessage('Флот потоплен!')
+                    view.displayMessage('Соединение потоплено!')
                     this.shipsSunk++
-                    informationShips.innerHTML = `Потоплено кораблей: <span class="primary">${model.shipsSunk}</span> из <span class="primary">${model.numShips}</span> `
+                    informationShips.innerHTML = `Потоплено соединений: <span class="primary">${model.shipsSunk}</span> из <span class="primary">${model.numShips}</span> `
                 }
                 return true
             }
@@ -88,7 +88,9 @@ let model = {
         for (let i = 0; i < this.numShips; i++) {
             let ship = this.ships[i]
             for (let j = 0; j < locations.length; j++) {
+                debugger
                 if (ship.locations.indexOf(locations[j]) >= 0) {
+                    debugger
                     return true
                 }
             }
@@ -124,6 +126,7 @@ const informationNumberShips = document.getElementById('informationNumberShips')
 const informationDifficulty = document.getElementById('informationDifficulty')
 const canvasFireworks = document.getElementById('fireworks-canvas')
 const tableTd = document.getElementsByTagName('td')
+const informationAboutGame = document.getElementById('informationAboutGame')
 
 startBtn.addEventListener('click', (e)=>{
     e.preventDefault();
@@ -131,10 +134,11 @@ startBtn.addEventListener('click', (e)=>{
 })
 difficultyList.addEventListener('click', (e) => {
     if (e.target.classList.contains('difficulty-btn')) {
-        model.numShips = parseInt(e.target.getAttribute('data-time'))
+        model.numShips = (parseInt(e.target.getAttribute('data-time'))/3)
+        model.numShips = (parseInt(e.target.getAttribute('data-time'))/3)
         screens[1].classList.add('up');
         init()
-        informationShips.innerHTML = `Потоплено кораблей: <span class="primary">${model.shipsSunk}</span> из <span class="primary">${model.numShips}</span> `
+        informationShips.innerHTML = `Потоплено соединений: <span class="primary">${model.shipsSunk}</span> из <span class="primary">${model.numShips}</span> `
     }
 })
 
@@ -153,24 +157,26 @@ function resetGame() {
 
 function finishGame (){
     board.removeAttribute('class')
-    board.innerHTML = `<h1>Вы потопили
- <span class="primary">${model.numShips}</span>
-   корабля за <span class="primary">${controller.guesses}</span> ходов</h1><button class="reset-btn" onclick="resetGame()">Начать заново</button>`;
+    board.innerHTML = `<h2>Вы потопили флот кораблей за <span class="primary">${controller.guesses}</span> ходов</h2><button class="reset-btn" onclick="resetGame()">Начать заново</button>`;
     canvasFireworks.classList.remove('deactive')
     fireworkStart()
 }
 
 for (let i = 0; i < difficultyBtn.length; i++) {
     difficultyBtn[i].addEventListener('mouseover', increaseSize)
-    difficultyBtn[i].addEventListener('mouseleave', decreaseSize)
 }
 
 function increaseSize(e) {
     let size = parseInt(e.target.getAttribute('data-time'))
-    informationDifficulty.style.width = `${size * 90}px`
+    informationDifficulty.style.width = `${size * 30}px`
     informationNumberShips.innerHTML = `Количество кораблей ${size}`
+    informationNumberShips.classList.add('up')
+    informationAboutGame.innerHTML = `<h4>Примечание: Флот состоит из ${parseInt(e.target.getAttribute('data-time'))/3} соединений по 3 корабля. Никаких послаблений не будет, поэтому соединения могут стоять рядом!</h4>`
+
+
 
 }
 function decreaseSize() {
     informationDifficulty.style.width = `0px`
+
 }
