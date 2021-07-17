@@ -88,9 +88,7 @@ let model = {
         for (let i = 0; i < this.numShips; i++) {
             let ship = this.ships[i]
             for (let j = 0; j < locations.length; j++) {
-                debugger
                 if (ship.locations.indexOf(locations[j]) >= 0) {
-                    debugger
                     return true
                 }
             }
@@ -120,13 +118,10 @@ function init() {
 const startBtn = document.querySelector('#start');
 const screens = document.querySelectorAll('.screen')
 const difficultyList = document.querySelector('#difficulty-list');
-const difficultyBtn = document.querySelectorAll('.difficulty-btn');
 const informationShips = document.getElementById('informationShips')
-const informationNumberShips = document.getElementById('informationNumberShips')
-const informationDifficulty = document.getElementById('informationDifficulty')
 const canvasFireworks = document.getElementById('fireworks-canvas')
 const tableTd = document.getElementsByTagName('td')
-const informationAboutGame = document.getElementById('informationAboutGame')
+
 
 startBtn.addEventListener('click', (e)=>{
     e.preventDefault();
@@ -160,23 +155,4 @@ function finishGame (){
     board.innerHTML = `<h2>Вы потопили флот кораблей за <span class="primary">${controller.guesses}</span> ходов</h2><button class="reset-btn" onclick="resetGame()">Начать заново</button>`;
     canvasFireworks.classList.remove('deactive')
     fireworkStart()
-}
-
-for (let i = 0; i < difficultyBtn.length; i++) {
-    difficultyBtn[i].addEventListener('mouseover', increaseSize)
-}
-
-function increaseSize(e) {
-    let size = parseInt(e.target.getAttribute('data-time'))
-    informationDifficulty.style.width = `${size * 30}px`
-    informationNumberShips.innerHTML = `Количество кораблей ${size}`
-    informationNumberShips.classList.add('up')
-    informationAboutGame.innerHTML = `<h4>Примечание: Флот состоит из ${parseInt(e.target.getAttribute('data-time'))/3} соединений по 3 корабля. Никаких послаблений не будет, поэтому соединения могут стоять рядом!</h4>`
-
-
-
-}
-function decreaseSize() {
-    informationDifficulty.style.width = `0px`
-
 }
